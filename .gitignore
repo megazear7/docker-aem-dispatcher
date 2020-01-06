@@ -59,3 +59,5 @@ typings/
 
 # Mac
 .DS_Store
+
+mod_dispatcher.so

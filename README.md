@@ -2,6 +2,7 @@
 
 ### Build
 
+Before building you will need to add the "mod_dispatcher.so" file. This file is hidden from source control.
 ```
 docker build -t dispatcher .
 ```
