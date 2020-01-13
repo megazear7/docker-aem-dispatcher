@@ -65,26 +65,28 @@
       /0001 { /type "deny" /glob "*" }
 
       # Open consoles
-#     /0011 { /type "allow" /url "/admin/*"  }  # allow servlet engine admin
-#     /0012 { /type "allow" /url "/crx/*"    }  # allow content repository
-#     /0013 { /type "allow" /url "/system/*" }  # allow OSGi console
+      #/0011 { /type "allow" /url "/admin/*"  }  # allow servlet engine admin
+      #/0012 { /type "allow" /url "/crx/*"    }  # allow content repository
+      #/0013 { /type "allow" /url "/system/*" }  # allow OSGi console
 
       # Allow non-public content directories
-#     /0021 { /type "allow" /url "/apps/*"   }  # allow apps access
-#     /0022 { /type "allow" /url "/bin/*"    }
+      #/0021 { /type "allow" /url "/apps/*"   }  # allow apps access
+      #/0022 { /type "allow" /url "/bin/*"    }
 
       /0023 { /type "allow" /url "/content*" }  # disable this rule to allow mapped content only
+
       # Grant access to the CQ log files
-	  /0024 { /type "allow" /url "/bin/crxde/logs" }
-	  # Grant access to the mapped content intranet files
-	  /0025 { /type "allow" /url "/intranet*" }
+	    /0024 { /type "allow" /url "/bin/crxde/logs" }
 
-#     /0024 { /type "allow" /url "/libs/*"   }
-#     /0025 { /type "deny"  /url "/libs/shindig/proxy*" } # if you enable /libs close access to proxy
+	    # Grant access to the mapped content intranet files
+	    /0025 { /type "allow" /url "/intranet*" }
 
-#     /0026 { /type "allow" /url "/home/*"   }
-#     /0027 { /type "allow" /url "/tmp/*"    }
-#     /0028 { /type "allow" /url "/var/*"    }
+      #/0024 { /type "allow" /url "/libs/*"   }
+      #/0025 { /type "deny"  /url "/libs/shindig/proxy*" } # if you enable /libs close access to proxy
+
+      #/0026 { /type "allow" /url "/home/*"   }
+      #/0027 { /type "allow" /url "/tmp/*"    }
+      #/0028 { /type "allow" /url "/var/*"    }
 
       # Enable specific mime types in non-public content directories
       /0041 { /type "allow" /url "*.css"   }  # enable css
@@ -95,7 +97,8 @@
       /0046 { /type "allow" /url "*.swf"   }  # enable flash
       /0047 { /type "allow" /url "*.jpg"   }  # enable jpg
       /0048 { /type "allow" /url "*.jpeg"  }  # enable jpeg
-#Font Filetypes
+
+      #Font Filetypes
       /0049 { /type "allow" /url "*.ttf"  }  # enable true-type-fonts
       /0050 { /type "allow" /url "*.svg"  }  # enable svg
       /0051 { /type "allow" /url "*.eot"  }  # enable eot
@@ -112,12 +115,14 @@
       /0085 { /type "deny"  /url "*.docview.xml"  }
 
       /0086 { /type "deny"  /url "*.*[0-9].json" }
-#     /0087 { /type "allow" /method "GET" /url "*.1.json" }  # allow one-level json requests
+      #/0087 { /type "allow" /method "GET" /url "*.1.json" }  # allow one-level json requests
 
       # Deny query
       /0090 { /type "deny"  /url "*.query.json" }
 
-      /0091 { /type "deny" /url "/content/we-retail/us/en/experience/authorization-code/callback*"}
+      # We.Retail
+      /0100 { /type "allow" /url "/etc/*" }
+      /0101 { /type "allow" /url "/etc.clientlibs/*" }
       }
 
     # The cache section regulates what responses will be cached and where.
@@ -163,12 +168,6 @@
           #        : *.html        -> all .html files
           /glob "*"
           /type "allow"
-          }
-
-        /0001
-          {
-          /glob "/content/*/responsivegrid/*"
-          /type "deny"
           }
         }
 
@@ -250,46 +249,5 @@
           }
         }
       }
-      # Authorization checker: before a page in the cache is delivered, a HEAD
-      # request is sent to the URL specified in 'url' with the query string
-      # '?uri=<page>'. If the response status is 200 (OK), the page is returned
-      # from the cache. Otherwise, the request is forwarded to the render and
-      # its response returned.
-      /auth_checker
-        {
-        # request is sent to this URL with '?uri=<page>' appended
-        /url "/bin/permissioncheck.html"
-
-        # only the requested pages matching the filter section below are checked,
-        # all other pages get delivered unchecked
-        /filter
-          {
-          /0000
-            {
-            /glob "*"
-            /type "deny"
-            }
-          /0001
-            {
-            /glob "*/experience/*.html"
-            /type "allow"
-            }
-          }
-        # any header line returned from the auth_checker's HEAD request matching
-        # the section below will be returned as well
-        /headers
-          {
-          /0000
-            {
-            /glob "*"
-            /type "deny"
-            }
-          /0001
-            {
-            /glob "Set-Cookie:*"
-            /type "allow"
-            }
-          }
-        }
     }
   }
