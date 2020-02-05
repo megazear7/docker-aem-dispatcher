@@ -6,7 +6,7 @@
 docker build -t easy-docker-dispatcher .
 ```
 
-### RUN
+### Run
 
 You will need to have an AEM publish instance running on [localhost:4503](http://localhost:4503).
 
