@@ -2,17 +2,16 @@
 
 ### Build
 
-Before building you will need to add the "mod_dispatcher.so" file. This file is hidden from source control.
 ```
-docker build -t dispatcher .
+docker build -t easy-docker-dispatcher .
 ```
 
 ### RUN
 
-You will need to have an AEM publish instance running on localhost:4503
+You will need to have an AEM publish instance running on [localhost:4503](http://localhost:4503).
 
 ```
-docker run -it -p 8080:80 dispatcher
+docker run -it -p 8080:80 easy-docker-dispatcher
 ```
 
-Then open a AEM page from localhost:8080
+Then open an AEM page at [localhost:8080](http://localhost:8080).
